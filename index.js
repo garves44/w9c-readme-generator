@@ -10,139 +10,242 @@
  * 2. Functions ()
  *   2.1 writeToFile()
  *   2.2 init()
- * 
+ *
  * 3. Document Ready
  *********************************************************/
 /* ===============[ 0. Dependancies ]=====================*/
-const fs = require('fs');
-const generateMarkdown = require("./utils/generateMarkdown");
-const readmeTemp = requrie("./src/readme-template");
+const fs = require("fs");
 const inquirer = require("inquirer");
-
 
 /* ===============[ 1. Globals ]=========================*/
 
 // array of questions for user
 const questions = [
-    {
-        type: 'input',
-        name: 'repositoryName',
-        message: 'Enter the name of application! (Required)',
-        validate: (repoNameInput) => {
-            if (repoNameInput) {
-                return true;
-            } else {
-                console.log("Enter the name of app!");
-                return false
-            }
-        },
+  {
+    type: "input",
+    name: "repositoryName",
+    message: "Enter the name of application! (Required)",
+    validate: (repoNameInput) => {
+      if (repoNameInput) {
+        return true;
+      } else {
+        console.log("Enter the name of app!");
+        return false;
+      }
     },
-    {
-        type: 'input',
-        name: 'githubUser',
-        message: 'Enter your Github username! (Required)',
-        validate: (githubUserInput) => {
-            if (githubUserInput) {
-                return true;
-            } else {
-                console.log('Enter your Github username!');
-                return false
-            }
-        },
+  },
+  {
+    type: "input",
+    name: "githubUser",
+    message: "Enter your Github username! (Required)",
+    validate: (githubUserInput) => {
+      if (githubUserInput) {
+        return true;
+      } else {
+        console.log("Enter your Github username!");
+        return false;
+      }
     },
-    {
-        type: 'input',
-        name: 'description',
-        message: 'Enter a description for your app! (Required)',
-        validate: (descInput) => {
-            if (descInput) {
-                return true;
-            } else {
-                console.log('Enter a description!');
-                return false
-            }
-        },
+  },
+  {
+    type: "input",
+    name: "description",
+    message: "Enter a description for your app! (Required)",
+    validate: (descInput) => {
+      if (descInput) {
+        return true;
+      } else {
+        console.log("Enter a description!");
+        return false;
+      }
     },
-    {
-        type: 'input',
-        name: 'installation',
-        message: 'Enter some instructions for users to install your app! (Required)',
-        validate: (instalInput) => {
-            if (instalInput) {
-                return true;
-            } else {
-                console.log('Enter some instructions!');
-                return false
-            }
-        },
+  },
+  {
+    type: "input",
+    name: "installation",
+    message:
+      "Enter some instructions for users to install your app! (Required)",
+    validate: (instalInput) => {
+      if (instalInput) {
+        return true;
+      } else {
+        console.log("Enter some instructions!");
+        return false;
+      }
     },
-    {
-        type: 'input',
-        name: 'useage',
-        message: 'Enter some instructions for users to use your app! (Required)',
-        validate: (useageInput) => {
-            if (useageInput) {
-                return true;
-            } else {
-                console.log('Enter some instructions!');
-                return false
-            }
-        },
+  },
+  {
+    type: "input",
+    name: "usage",
+    message: "Enter some instructions for users to use your app! (Required)",
+    validate: (usageInput) => {
+      if (usageInput) {
+        return true;
+      } else {
+        console.log("Enter some instructions!");
+        return false;
+      }
     },
-    {
-        type: 'input',
-        name: 'license',
-        message: 'List license type for this application, for no license type "none"?(Required)',
-        validate: (licenseInput) => {
-            if (licenseInput) {
-                return true;
-            } else {
-                console.log('Enter none for no license!');
-                return false
-            }
-        },
+  },
+  {
+    type: "input",
+    name: "license",
+    message:
+      'List license type for this application, for no license type "none"?(Required)',
+    validate: (licenseInput) => {
+      if (licenseInput) {
+        return true;
+      } else {
+        console.log("Enter none for no license!");
+        return false;
+      }
     },
-    {
-        type: 'confirm',
-        name: 'userContribute',
-        message: 'Do you want to allow users to report issues and contribute to your app?(Required)',
-        default: false
+  },
+  {
+    type: "confirm",
+    name: "confirmIssues",
+    message:
+      "Would you like people to report issues?",
+    default: false,
+  },
+  {
+    type: "input",
+    name: "issues",
+    message: "Provide a way for users to contact you!",
+    when: ({ confirmIssues }) => confirmIssues,
+  },
+  {
+    type: "input",
+    name: "contributors",
+    message: 'List other contributors, if no others type "none"?(Required)',
+    validate: (contributorsInput) => {
+      if (contributorsInput) {
+        return true;
+      } else {
+        console.log("Enter none for no contributors!");
+        return false;
+      }
     },
-    {
-        type: 'input',
-        name: 'contributors',
-        message: 'List other contributors, if no others type "none"?(Required)',
-        validate: (contributorsInput) => {
-            if (contributorsInput) {
-                return true;
-            } else {
-                console.log('Enter none for no contributors!');
-                return false
-            }
-        },
-    },
-
+  },
 ];
-
 
 /* ===============[ 2. Functions () ]======================*/
 /**
- * 2.1 writeToFile()
+ * 2.1 promptUser()
  */
-
-// function to write README file
-function writeToFile(fileName, data) {
+const promptUser = () => {
+    return inquirer.prompt(questions)
 };
 /**
- * 2.2 init()
+ * 2.2 writeToFile()
  */
-// function to initialize program
+function writeToFile(fileName, data) {}
+/**
+ * 2.3 init()
+ */
 function init() {
-
-};
-
+  inquirer.prompt(questions).then((res) => {
+    fs.appendFileSync("./dist/README.md", `# ${res.repositoryName}\n`, (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve({
+        ok: true,
+        message: "Repository Name added!",
+      });
+    });
+    fs.appendFileSync(
+      "./dist/README.md",
+      `This app was developed by:${res.githubUser}\n \n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "Github Name added!",
+        });
+      }
+    );
+    fs.appendFileSync("./dist/README.md", `${res.description} \n`, (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve({
+        ok: true,
+        message: "Description added!",
+      });
+    });
+    fs.appendFileSync(
+      "./dist/README.md",
+      `## Installation:\n${res.installation}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "Install instructions added!",
+        });
+      }
+    );
+    fs.appendFileSync(
+      "./dist/README.md",
+      `## App Usage:\n${res.usage}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "User instructions added!",
+        });
+      }
+    );
+    fs.appendFileSync(
+      "./dist/README.md",
+      `## List of Contributors:\n${res.contributors}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "Contributor list added!",
+        });
+      }
+    );
+    fs.appendFileSync(
+      "./dist/README.md",
+      `## License:\n${res.license}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "License added!",
+        });
+      }
+    );
+  });
+}
 
 /* ===============[ 3. Document Ready ]======================*/
 
 // function call to initialize program
+promptUser()
+.then
+
+
 init();
+// promptUser().then((readmeData) => {
+//   return;
+// });
