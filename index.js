@@ -8,8 +8,7 @@
  * 0. Dependancies
  * 1. Globals
  * 2. Functions ()
- *   2.1 writeToFile()
- *   2.2 init()
+ *   2.1 init()
  *
  * 3. Document Ready
  *********************************************************/
@@ -24,7 +23,7 @@ const questions = [
   {
     type: "input",
     name: "repositoryName",
-    message: "Enter the name of application! (Required)",
+    message: "Enter the name/title of application! (Required)",
     validate: (repoNameInput) => {
       if (repoNameInput) {
         return true;
@@ -56,6 +55,19 @@ const questions = [
         return true;
       } else {
         console.log("Enter a description!");
+        return false;
+      }
+    },
+  },
+  {
+    type: "input",
+    name: "toc",
+    message: "Table of Contents! (Required)",
+    validate: (tocInput) => {
+      if (tocInput) {
+        return true;
+      } else {
+        console.log("Enter information for the Table of Contents!");
         return false;
       }
     },
@@ -104,8 +116,7 @@ const questions = [
   {
     type: "confirm",
     name: "confirmIssues",
-    message:
-      "Would you like people to report issues?",
+    message: "Would you like people to report issues?",
     default: false,
   },
   {
@@ -127,34 +138,54 @@ const questions = [
       }
     },
   },
+  {
+    type: "input",
+    name: "tests",
+    message: 'List the tests that have been preformed on this app!(Required)',
+    validate: (testsInput) => {
+      if (testsInput) {
+        return true;
+      } else {
+        console.log("List Tests Completed!");
+        return false;
+      }
+    },
+  },
+  {
+    type: "input",
+    name: "contact",
+    message: 'List way for people to contact and ask questions!(Required)',
+    validate: (contactInput) => {
+      if (contactInput) {
+        return true;
+      } else {
+        console.log("Contact info added!");
+        return false;
+      }
+    },
+  },
 ];
 
 /* ===============[ 2. Functions () ]======================*/
 /**
- * 2.1 promptUser()
- */
-const promptUser = () => {
-    return inquirer.prompt(questions)
-};
-/**
- * 2.2 writeToFile()
- */
-function writeToFile(fileName, data) {}
-/**
- * 2.3 init()
+ * 2.1 init()
  */
 function init() {
   inquirer.prompt(questions).then((res) => {
-    fs.appendFileSync("./dist/README.md", `# ${res.repositoryName}\n`, (err) => {
-      if (err) {
-        reject(err);
-        return;
+    fs.appendFileSync(
+      "./dist/README.md",
+      `# ${res.repositoryName}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "Repository Name added!",
+        });
       }
-      resolve({
-        ok: true,
-        message: "Repository Name added!",
-      });
-    });
+    );
     fs.appendFileSync(
       "./dist/README.md",
       `This app was developed by:${res.githubUser}\n \n`,
@@ -169,7 +200,7 @@ function init() {
         });
       }
     );
-    fs.appendFileSync("./dist/README.md", `${res.description} \n`, (err) => {
+    fs.appendFileSync("./dist/README.md", `${res.description}\n`, (err) => {
       if (err) {
         reject(err);
         return;
@@ -179,6 +210,20 @@ function init() {
         message: "Description added!",
       });
     });
+    fs.appendFileSync(
+      "./dist/README.md",
+      `## Table of Contents:\n${res.toc}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "Description added!",
+        });
+      }
+    );
     fs.appendFileSync(
       "./dist/README.md",
       `## Installation:\n${res.installation}\n`,
@@ -208,6 +253,20 @@ function init() {
       }
     );
     fs.appendFileSync(
+        "./dist/README.md",
+        `## License:\n${res.license}\n`,
+        (err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          resolve({
+            ok: true,
+            message: "License added!",
+          });
+        }
+      );
+    fs.appendFileSync(
       "./dist/README.md",
       `## List of Contributors:\n${res.contributors}\n`,
       (err) => {
@@ -223,7 +282,7 @@ function init() {
     );
     fs.appendFileSync(
       "./dist/README.md",
-      `## License:\n${res.license}\n`,
+      `## Tests:\n${res.tests}\n`,
       (err) => {
         if (err) {
           reject(err);
@@ -231,21 +290,28 @@ function init() {
         }
         resolve({
           ok: true,
-          message: "License added!",
+          message: "Tests Listed!",
         });
       }
     );
+    fs.appendFileSync(
+      "./dist/README.md",
+      `## Questions:\n${res.contact}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({
+          ok: true,
+          message: "Contact info added!",
+        });
+      }
+    );
+    
   });
 }
 
 /* ===============[ 3. Document Ready ]======================*/
-
 // function call to initialize program
-promptUser()
-.then
-
-
 init();
-// promptUser().then((readmeData) => {
-//   return;
-// });
