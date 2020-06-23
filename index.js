@@ -76,6 +76,51 @@ const questions = [
             }
         },
     },
+    {
+        type: 'input',
+        name: 'useage',
+        message: 'Enter some instructions for users to use your app! (Required)',
+        validate: (useageInput) => {
+            if (useageInput) {
+                return true;
+            } else {
+                console.log('Enter some instructions!');
+                return false
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'license',
+        message: 'List license type for this application, for no license type "none"?(Required)',
+        validate: (licenseInput) => {
+            if (licenseInput) {
+                return true;
+            } else {
+                console.log('Enter none for no license!');
+                return false
+            }
+        },
+    },
+    {
+        type: 'confirm',
+        name: 'userContribute',
+        message: 'Do you want to allow users to report issues and contribute to your app?(Required)',
+        default: false
+    },
+    {
+        type: 'input',
+        name: 'contributors',
+        message: 'List other contributors, if no others type "none"?(Required)',
+        validate: (contributorsInput) => {
+            if (contributorsInput) {
+                return true;
+            } else {
+                console.log('Enter none for no contributors!');
+                return false
+            }
+        },
+    },
 
 ];
 
