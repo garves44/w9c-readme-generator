@@ -14,12 +14,68 @@
  * 3. Document Ready
  *********************************************************/
 /* ===============[ 0. Dependancies ]=====================*/
+const fs = require('fs');
+const generateMarkdown = require("./utils/generateMarkdown");
+const readmeTemp = requrie("./src/readme-template");
+const inquirer = require("inquirer");
 
 
 /* ===============[ 1. Globals ]=========================*/
 
 // array of questions for user
 const questions = [
+    {
+        type: 'input',
+        name: 'repositoryName',
+        message: 'Enter the name of application! (Required)',
+        validate: (repoNameInput) => {
+            if (repoNameInput) {
+                return true;
+            } else {
+                console.log("Enter the name of app!");
+                return false
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'githubUser',
+        message: 'Enter your Github username! (Required)',
+        validate: (githubUserInput) => {
+            if (githubUserInput) {
+                return true;
+            } else {
+                console.log('Enter your Github username!');
+                return false
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'description',
+        message: 'Enter a description for your app! (Required)',
+        validate: (descInput) => {
+            if (descInput) {
+                return true;
+            } else {
+                console.log('Enter a description!');
+                return false
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'installation',
+        message: 'Enter some instructions for users to install your app! (Required)',
+        validate: (instalInput) => {
+            if (instalInput) {
+                return true;
+            } else {
+                console.log('Enter some instructions!');
+                return false
+            }
+        },
+    },
 
 ];
 
