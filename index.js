@@ -176,7 +176,7 @@ function init() {
     );
     fs.appendFileSync(
       "./dist/README.md",
-      `## Table of Contents:\n[1. Installation](#Installation)\n[2. App Usage](#App-Usage)\n[3. License](#License)\n[4. List of Contributors](#List-of-Contributors)\n[5. Tests](#Tests)\n[6. Questions](#Questions)\n`,
+      `## Table of Contents:\n[1. Description](#Description)\n[2. Installation](#Installation)\n[3. App Usage](#App-Usage)\n[4. License](#License)\n[5. List of Contributors](#List-of-Contributors)\n[6. Tests](#Tests)\n[7. Questions](#Questions)\n`,
       (err) => {
         if (err) {
           reject(err);
@@ -188,7 +188,7 @@ function init() {
         });
       }
     );
-    fs.appendFileSync("./dist/README.md", `${res.description}\n`, (err) => {
+    fs.appendFileSync("./dist/README.md", `## Description:\n${res.description}\n`, (err) => {
       if (err) {
         reject(err);
         return;
