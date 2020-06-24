@@ -61,19 +61,6 @@ const questions = [
   },
   {
     type: "input",
-    name: "toc",
-    message: "Table of Contents! (Required)",
-    validate: (tocInput) => {
-      if (tocInput) {
-        return true;
-      } else {
-        console.log("Enter information for the Table of Contents!");
-        return false;
-      }
-    },
-  },
-  {
-    type: "input",
     name: "installation",
     message:
       "Enter some instructions for users to install your app! (Required)",
@@ -103,7 +90,7 @@ const questions = [
     type: "input",
     name: "license",
     message:
-      'List license type for this application, for no license type "none"?(Required)',
+      'List license type for this application, for no license type "none"?(examples: GPL 3.0, MIT)(Required)',
     validate: (licenseInput) => {
       if (licenseInput) {
         return true;
@@ -141,7 +128,7 @@ const questions = [
   {
     type: "input",
     name: "tests",
-    message: 'List the tests that have been preformed on this app!(Required)',
+    message: "List the tests that have been preformed on this app!(Required)",
     validate: (testsInput) => {
       if (testsInput) {
         return true;
@@ -154,7 +141,8 @@ const questions = [
   {
     type: "input",
     name: "contact",
-    message: 'List way for people to contact and ask questions!(Required)',
+    message:
+      "Enter an email address for users to contact you and ask questions!(Required)",
     validate: (contactInput) => {
       if (contactInput) {
         return true;
@@ -188,7 +176,7 @@ function init() {
     );
     fs.appendFileSync(
       "./dist/README.md",
-      `This app was developed by:${res.githubUser}\n \n`,
+      `## Table of Contents:\n[1. Installation](#Installation)\n[2. App Usage](#App-Usage)\n[3. License](#License)\n[4. List of Contributors](#List-of-Contributors)\n[5. Tests](#Tests)\n[6. Questions](#Questions)\n`,
       (err) => {
         if (err) {
           reject(err);
@@ -196,7 +184,7 @@ function init() {
         }
         resolve({
           ok: true,
-          message: "Github Name added!",
+          message: "Description added!",
         });
       }
     );
@@ -210,20 +198,6 @@ function init() {
         message: "Description added!",
       });
     });
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## Table of Contents:\n${res.toc}\n`,
-      (err) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve({
-          ok: true,
-          message: "Description added!",
-        });
-      }
-    );
     fs.appendFileSync(
       "./dist/README.md",
       `## Installation:\n${res.installation}\n`,
@@ -253,19 +227,19 @@ function init() {
       }
     );
     fs.appendFileSync(
-        "./dist/README.md",
-        `## License:\n${res.license}\n`,
-        (err) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve({
-            ok: true,
-            message: "License added!",
-          });
+      "./dist/README.md",
+      `## License:\n${res.license}\n`,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
         }
-      );
+        resolve({
+          ok: true,
+          message: "License added!",
+        });
+      }
+    );
     fs.appendFileSync(
       "./dist/README.md",
       `## List of Contributors:\n${res.contributors}\n`,
@@ -296,7 +270,7 @@ function init() {
     );
     fs.appendFileSync(
       "./dist/README.md",
-      `## Questions:\n${res.contact}\n`,
+      `## Questions:\n Here is a link to my github: https://github.com/${res.githubUser}\n Email me at:${res.contact}\n for additional questions\n`,
       (err) => {
         if (err) {
           reject(err);
@@ -308,7 +282,6 @@ function init() {
         });
       }
     );
-    
   });
 }
 
