@@ -159,57 +159,58 @@ const questions = [
  * 2.1 init()
  */
 function init() {
+  const tocHeader = "## Table of Contents:"
+  const toc = "  \n[1. Description](#Description)  \n[2. Installation](#Installation)  \n[3. App Usage](#App-Usage)  \n[4. License](#License)  \n[5. List of Contributors](#List-of-Contributors)  \n[6. Tests](#Tests)  \n[7. Questions](#Questions)  \n"
   inquirer.prompt(questions).then((res) => {
-    fs.appendFileSync(
+    fs.writeFile(
       "./dist/README.md",
       `# ${res.repositoryName}\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "Repository Name added!",
-        });
+        console.log("Repository Name added!");
       }
     );
     fs.appendFileSync(
       "./dist/README.md",
-      `## Table of Contents:\n[1. Description](#Description)\n[2. Installation](#Installation)\n[3. App Usage](#App-Usage)\n[4. License](#License)\n[5. List of Contributors](#List-of-Contributors)\n[6. Tests](#Tests)\n[7. Questions](#Questions)\n`,
+      tocHeader,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "Description added!",
-        });
+        console.log("Table of Contents added!");
+      }
+    );
+    fs.appendFileSync(
+      "./dist/README.md",
+      toc,
+      (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("Table of Contents added!");
       }
     );
     fs.appendFileSync("./dist/README.md", `## Description:\n${res.description}\n`, (err) => {
       if (err) {
-        reject(err);
+        console.log(err);
         return;
       }
-      resolve({
-        ok: true,
-        message: "Description added!",
-      });
+      console.log("Description added!");
     });
     fs.appendFileSync(
       "./dist/README.md",
       `## Installation:\n${res.installation}\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "Install instructions added!",
-        });
+        console.log("Install instructions added!");
       }
     );
     fs.appendFileSync(
@@ -217,13 +218,10 @@ function init() {
       `## App Usage:\n${res.usage}\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "User instructions added!",
-        });
+        console.log("User instructions added!");
       }
     );
     fs.appendFileSync(
@@ -231,13 +229,10 @@ function init() {
       `## License:\n${res.license}\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "License added!",
-        });
+        console.log("License added!");
       }
     );
     fs.appendFileSync(
@@ -245,13 +240,10 @@ function init() {
       `## List of Contributors:\n${res.contributors}\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "Contributor list added!",
-        });
+        console.log("Contributor list added!");
       }
     );
     fs.appendFileSync(
@@ -259,13 +251,10 @@ function init() {
       `## Tests:\n${res.tests}\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "Tests Listed!",
-        });
+        console.log("Tests Listed!")
       }
     );
     fs.appendFileSync(
@@ -273,13 +262,10 @@ function init() {
       `## Questions:\n Here is a link to my github: https://github.com/${res.githubUser}\n Email me at:${res.contact}\n for additional questions\n`,
       (err) => {
         if (err) {
-          reject(err);
+          console.log(err);
           return;
         }
-        resolve({
-          ok: true,
-          message: "Contact info added!",
-        });
+        console.log("Contact info added!")
       }
     );
   });
