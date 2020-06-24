@@ -15,6 +15,8 @@
 /* ===============[ 0. Dependancies ]=====================*/
 const fs = require("fs");
 const inquirer = require("inquirer");
+const { title } = require("process");
+const { table } = require("console");
 
 /* ===============[ 1. Globals ]=========================*/
 
@@ -159,115 +161,131 @@ const questions = [
  * 2.1 init()
  */
 function init() {
-  const tocHeader = "## Table of Contents:"
-  const toc = "  \n[1. Description](#Description)  \n[2. Installation](#Installation)  \n[3. App Usage](#App-Usage)  \n[4. License](#License)  \n[5. List of Contributors](#List-of-Contributors)  \n[6. Tests](#Tests)  \n[7. Questions](#Questions)  \n"
+  const toc =
+    "## Table of Contents:  \n[1. Description](#Description)  \n[2. Installation](#Installation)  \n[3. App Usage](#App-Usage)  \n[4. License](#License)  \n[5. List of Contributors](#List-of-Contributors)  \n[6. Tests](#Tests)  \n[7. Questions](#Questions)  \n";
   inquirer.prompt(questions).then((res) => {
-    fs.writeFile(
-      "./dist/README.md",
-      `# ${res.repositoryName}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+    title();
+    function title() {
+      fs.writeFile(
+        "./dist/README.md",
+        `# ${res.repositoryName}  \r\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("Repository Name added!");
+          table();
         }
-        console.log("Repository Name added!");
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      tocHeader,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        console.log("Table of Contents added!");
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      toc,
-      (err) => {
+      );
+    }
+    function table() {
+      fs.appendFile("./dist/README.md", `${toc}`, (err) => {
         if (err) {
           console.log(err);
           return;
         }
         console.log("Table of Contents added!");
-      }
-    );
-    fs.appendFileSync("./dist/README.md", `## Description:\n${res.description}\n`, (err) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log("Description added!");
-    });
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## Installation:\n${res.installation}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+        description();
+      });
+    }
+    function description() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## Description:\n${res.description}\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("Description added!");
+          instal();
         }
-        console.log("Install instructions added!");
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## App Usage:\n${res.usage}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+      );
+    }
+    function instal() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## Installation:\n${res.installation}\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("Install instructions added!");
+          usageFunc();
         }
-        console.log("User instructions added!");
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## License:\n${res.license}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+      );
+    }
+    function usageFunc() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## App Usage:\n${res.usage}\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("User instructions added!");
+          licensing();
         }
-        console.log("License added!");
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## List of Contributors:\n${res.contributors}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+      );
+    }
+    function licensing() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## License:\n${res.license}\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("License added!");
+          loc();
         }
-        console.log("Contributor list added!");
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## Tests:\n${res.tests}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+      );
+    }
+    function loc() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## List of Contributors:\n${res.contributors}\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("Contributor list added!");
+          testing();
         }
-        console.log("Tests Listed!")
-      }
-    );
-    fs.appendFileSync(
-      "./dist/README.md",
-      `## Questions:\n Here is a link to my github: https://github.com/${res.githubUser}\n Email me at:${res.contact}\n for additional questions\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
+      );
+    }
+    function testing() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## Tests:\n${res.tests}\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("Tests Listed!");
+          questioning();
         }
-        console.log("Contact info added!")
-      }
-    );
+      );
+    }
+    function questioning() {
+      fs.appendFile(
+        "./dist/README.md",
+        `## Questions:\n Here is a link to my github: https://github.com/${res.githubUser}\n Email me at:${res.contact}\n for additional questions\n`,
+        (err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log("Contact info added!");
+        }
+      );
+    }
   });
 }
 
