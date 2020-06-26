@@ -305,7 +305,7 @@ function init() {
     function loc() {
       fs.appendFile(
         "./dist/README.md",
-        `## List of Contributors:\n${res.contributors}\n`,
+        `  \n## List of Contributors:\n${res.contributors}\n`,
         (err) => {
           if (err) {
             console.log(err);
