@@ -32,5 +32,7 @@ https://github.com/garves44
  Email me at:  
 garves44@gmail.com  
 for additional questions
+Watch this video for a demonstration of how to use the app:
+https://www.youtube.com/watch?v=cUArmKwIkK0
 
 ![](/assets/images/readme.PNG) 
